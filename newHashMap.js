@@ -78,16 +78,18 @@ class LinkedList {
      let currNode = this.head;
      let previous = this.head;
      while (currNode) {
-       if (currNode.value === key) {
+       if (currNode.key === key) {
          //  key -> newNode -> key.next
          currNode.value = value;
          return;
        } else if(currNode.next === null){
            currNode.next = new _Node(key, value, next);
-         }
+           return;
+         } else{
        previous = currNode;
        currNode = currNode.next;
      }
+    }
      return console.log('key doesnt exist in list');
   }
 
