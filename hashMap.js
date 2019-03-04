@@ -145,16 +145,52 @@ const permutations = (string) => {
 // console.log(permutations('acecarr'));
 // console.log(premutations('north'));
 
+
+//I am glass and not unbreakable
 const groupings = (arr) => {
   let hashArr = [];
+  let output = [];
   for(let i = 0; i < arr.length; i++){
     let hashMap = new HashMap;
+    let stringArr = arr[i].split('');
     if(hashArr.length === 0){
-      let stringArr = arr[i].split('');
       for(let j=0; j < stringArr.length; j++){
-        hashMap.set(stringArr[j], j);
+        hashMap.set(stringArr[j], 1);
       }
       hashArr.push(hashMap);
+      output.push([arr[i]])
+      console.log(output);
+    } else{
+    let error = 0;
+    for(let j = 0; j < hashArr.length; j++){
+      error = 0;
+      for(let k = 0; k < stringArr.length; k++){
+        try {
+          hashArr[j].get(stringArr[k])
+        }
+        catch{
+          error = error + 1;
+        }
+      }
+      if(error === 0){
+        output[j].push(arr[i]);
+        break;
+      }
+    }
+    if(error > 0){
+      let hashName = arr[i] + 'Hash';
+      console.log('hashName', hashName);
+      hashName = new HashMap;
+      for(let j=0; j < stringArr.length; j++){
+        hashName.set(stringArr[j], 1);
+      }
+      hashArr.push(hashName);
+      output.push([arr[i]])
     }
   }
+  }
+  console.log(hashArr);
+  return output;
 };
+
+console.log(groupings(['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race']));
