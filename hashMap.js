@@ -113,4 +113,19 @@ console.log(lotr.get('Maiar'));
 let tempString = 'acecarr';
 
 //a: 1, b: 2, c: 3, etc. 
-//most shallow fail is no duplicate numbers (North)
+//most shallow fail is no duplicate letters (North)
+// racecar
+// r:2 a:2 c:2 e:2 
+// acecarr
+// a - > c -> e->c ->a -> r ->r
+
+//  take hashmap with incremented values;
+//  counter for odd, if odd ever goes above 1, fail out
+const permutations = (string) => {
+  let stringArr = string.split('');
+  let hashStr = new HashMap;
+  for(let i = 0; i < stringArr.length; i++){
+    hashStr.set(stringArr[1], 0);
+  }
+  for()
+};
