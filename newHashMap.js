@@ -1,7 +1,8 @@
 'use strict';
 
 class _Node {
-  constructor(value, next) {
+  constructor(key, value, next) {
+    this.key = key;
     this.value = value;
     this.next = next;
   }
@@ -71,6 +72,25 @@ class LinkedList {
     }
     return console.log('key doesnt exist in list');
   }
+
+  insertOrReplace(key, value, next){
+     //  insert new node after node containing key
+     let currNode = this.head;
+     let previous = this.head;
+     while (currNode) {
+       if (currNode.value === key) {
+         //  key -> newNode -> key.next
+         currNode.value = value;
+         return;
+       } else if(currNode.next === null){
+           currNode.next = new _Node(key, value, next);
+         }
+       previous = currNode;
+       currNode = currNode.next;
+     }
+     return console.log('key doesnt exist in list');
+  }
+
   insertAt(numKey, newItem) {
     let counter = 1;
     let currNode = this.head;
@@ -158,19 +178,23 @@ class HashMap {
     return this._slots[index].value;
   }
 
-  set(key, value) {
+  set(key, value, next = null) {
     const loadRatio = (this.length + this._deleted + 1) / this._capacity;
     if (loadRatio > HashMap.MAX_LOAD_RATIO) {
       this._resize(this._capacity * HashMap.SIZE_RATIO);
     }
 
-    const index = this._findSlot(key);
-    this._slots[index] = {
-      key,
-      value,
-      deleted: false,
-    };
-    this.length++;
+    const indexO = this._findSlot(key);
+    //Empty or Occupied
+    //If Empty, this._slots = new LinkedList, THEN LinkedList.head = new _node{key, value, next: null}
+    if(indexO.first === false){
+      this._slots[indexO.index] = new LinkedList();
+      this._slots[indexO.index].head = new _Node(key, value, next);
+      this.length++;
+    }
+    //If occupied, let tempNode = new _Node (key, value), this._slots[index].first Q: does new _Node key = first.key? if yes, first.value = value BREAK, second Q: is next null?
+    this._slots[indexO.index].insertOrReplace(key, value, next);
+    console.log(this._slots[indexO.index]);
   }
 
   remove(key) {
@@ -191,15 +215,17 @@ class HashMap {
     for (let i=start; i<start + this._capacity; i++) {
       const index = i % this._capacity;
       const slot = this._slots[index];
-      if (slot === undefined || (slot.key == key && !slot.deleted)) {
+      if (slot === undefined) {
         // return index;
         return {
           index: index,
           first: false
         };
-      }
-      if(slot){
-        
+      } else {
+        return {
+          index: index,
+          first: true
+        }
       }
     }
   }
@@ -232,3 +258,24 @@ class HashMap {
 
 HashMap.MAX_LOAD_RATIO = 0.9;
 HashMap.SIZE_RATIO = 3;
+
+const lotr = new HashMap;
+
+let lotrArr = [
+  {Hobbit:'Bilbo'}, 
+  {Hobbit:'Frodo'}, 
+  {Wizard:'Gandolf'}, 
+  {Human:'Aragon'}, 
+  {Elf: 'Legolas'}, 
+  {Maiar:'The Necromancer'}, 
+  {Maiar: 'Sauron'}, 
+  {RingBearer: 'Gollum'}, 
+  {LadyOfLight: 'Galadriel'}, 
+  {HalfElven: 'Arwen'}, 
+  {Ent: 'Treebeard'}
+];
+
+lotr.set('Hobbit', 'Bilbo');
+lotr.set('Human', 'Aragon');
+lotr.set('Hobbit', 'Frodo');
+console.log(lotr);
