@@ -10,6 +10,7 @@ class HashMap {
 
   get(key) {
     const index = this._findSlot(key);
+    console.log(index);
     if (this._slots[index] === undefined) {
       throw new Error('Key error');
     }
@@ -107,3 +108,9 @@ lotrArr.forEach(obj => {
 
 
 console.log(lotr);
+console.log(lotr.get('Maiar'));
+
+let tempString = 'acecarr';
+
+//a: 1, b: 2, c: 3, etc. 
+//most shallow fail is no duplicate numbers (North)
