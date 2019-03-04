@@ -10,7 +10,6 @@ class HashMap {
 
   get(key) {
     const index = this._findSlot(key);
-    console.log(index);
     if (this._slots[index] === undefined) {
       throw new Error('Key error');
     }
@@ -85,30 +84,30 @@ class HashMap {
 HashMap.MAX_LOAD_RATIO = 0.9;
 HashMap.SIZE_RATIO = 3;
 
-const lotr = new HashMap;
+// const lotr = new HashMap;
 
-let lotrArr = [
-  {Hobbit:'Bilbo'}, 
-  {Hobbit:'Frodo'}, 
-  {Wizard:'Gandolf'}, 
-  {Human:'Aragon'}, 
-  {Elf: 'Legolas'}, 
-  {Maiar:'The Necromancer'}, 
-  {Maiar: 'Sauron'}, 
-  {RingBearer: 'Gollum'}, 
-  {LadyOfLight: 'Galadriel'}, 
-  {HalfElven: 'Arwen'}, 
-  {Ent: 'Treebeard'}
-];
+// let lotrArr = [
+//   {Hobbit:'Bilbo'}, 
+//   {Hobbit:'Frodo'}, 
+//   {Wizard:'Gandolf'}, 
+//   {Human:'Aragon'}, 
+//   {Elf: 'Legolas'}, 
+//   {Maiar:'The Necromancer'}, 
+//   {Maiar: 'Sauron'}, 
+//   {RingBearer: 'Gollum'}, 
+//   {LadyOfLight: 'Galadriel'}, 
+//   {HalfElven: 'Arwen'}, 
+//   {Ent: 'Treebeard'}
+// ];
 
-lotrArr.forEach(obj => {
-  let tempArr = Object.entries(obj);
-  lotr.set(tempArr[0][0], tempArr[0][1]);
-});
+// lotrArr.forEach(obj => {
+//   let tempArr = Object.entries(obj);
+//   lotr.set(tempArr[0][0], tempArr[0][1]);
+// });
 
 
-console.log(lotr);
-console.log(lotr.get('Maiar'));
+// console.log(lotr);
+// console.log(lotr.get('Maiar'));
 
 let tempString = 'acecarr';
 
@@ -122,10 +121,27 @@ let tempString = 'acecarr';
 //  take hashmap with incremented values;
 //  counter for odd, if odd ever goes above 1, fail out
 const permutations = (string) => {
-  let stringArr = string.split('');
+  let stringArr = string.toLowerCase().split('');
   let hashStr = new HashMap;
   for(let i = 0; i < stringArr.length; i++){
-    hashStr.set(stringArr[1], 0);
+    hashStr.set(stringArr[i], 0);
   }
-  for()
+  for(let i = 0; i < stringArr.length; i++){
+    hashStr.set(stringArr[i], hashStr.get(stringArr[i]) + 1);
+  }
+  let uniq = [...new Set(stringArr)];
+  let odds = 0;
+  for(let i = 0; i < uniq.length; i++){
+    if(hashStr.get(uniq[i]) % 2 === 1){
+    odds = odds + 1;
+    }
+    if(odds > 1){
+      return false;
+    }
+  }
+  return true;
 };
+
+// console.log(permutations('acecarr'));
+// console.log(premutations('north'));
+
