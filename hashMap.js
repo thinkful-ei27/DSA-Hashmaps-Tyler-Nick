@@ -133,7 +133,7 @@ const permutations = (string) => {
   let odds = 0;
   for(let i = 0; i < uniq.length; i++){
     if(hashStr.get(uniq[i]) % 2 === 1){
-    odds = odds + 1;
+      odds = odds + 1;
     }
     if(odds > 1){
       return false;
@@ -145,3 +145,16 @@ const permutations = (string) => {
 // console.log(permutations('acecarr'));
 // console.log(premutations('north'));
 
+const groupings = (arr) => {
+  let hashArr = [];
+  for(let i = 0; i < arr.length; i++){
+    let hashMap = new HashMap;
+    if(hashArr.length === 0){
+      let stringArr = arr[i].split('');
+      for(let j=0; j < stringArr.length; j++){
+        hashMap.set(stringArr[j], j);
+      }
+      hashArr.push(hashMap);
+    }
+  }
+};
